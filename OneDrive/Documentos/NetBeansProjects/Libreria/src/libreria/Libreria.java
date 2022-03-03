@@ -63,7 +63,7 @@ public class Libreria {
                 autorservicio.crearAutor();
                 break; 
             case 3: 
-                autorservicio.ConsultarAutorPorNombre();
+                autorservicio.ConsultarAutorPorId();
                 break; 
             case 4: 
                 autorservicio.ModificarAutor();
@@ -97,9 +97,10 @@ public class Libreria {
                 break;    
             default:
                 System.out.println("Opcion no identificada con calculos!");
+                
                    break; 
         }
-        System.out.println("Desea continuar S/N.");
+        System.out.println("Desea continuar marque si(S) o no(N).(Para salir de la ejecucion marque un numero > 13)");
         resp = leer.next();        
         }while(opc <= 13);
         

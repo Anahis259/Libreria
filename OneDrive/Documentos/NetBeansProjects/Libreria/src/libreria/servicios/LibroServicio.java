@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package libreria.servicios;
 
 import java.util.List;
@@ -12,13 +7,7 @@ import javax.persistence.Persistence;
 import libreria.entidades.Autor;
 import libreria.entidades.Editorial;
 import libreria.entidades.Libro;
-import static libreria.entidades.Libro_.isbn;
-import static libreria.entidades.Libro_.titulo;
 
-/**
- *
- * @author anahi
- */
 public class LibroServicio {    
     Scanner leer = new Scanner(System.in).useDelimiter("\n");
     public void CrearLibro()throws Exception{
@@ -45,8 +34,6 @@ public class LibroServicio {
             System.out.println("Ingrese el ID del editorial: ");
             Editorial e = em.find(Editorial.class, leer.nextInt());// encuentra el autor.
             libro.setEditorial(e);
-            
-            //List<>
             System.out.println("Libro GUARDADO!");
             
             em.getTransaction().begin();
@@ -81,12 +68,13 @@ public class LibroServicio {
             }
            
         }catch (Exception e){ 
-            throw e; 
+            System.out.println("Debe llenar todos los datos que se piden para agregar un libro!.");; 
         }
         
     }
     public void busquedaLibroPorISBN(){
         EntityManager em = Persistence.createEntityManagerFactory("LibreriaPU").createEntityManager();
+        try {
         System.out.println("Ingrese el ISBN del libro que desea buscar: "); 
         long isbn = leer.nextLong();
         Libro l = em.find(Libro.class, isbn);
@@ -98,13 +86,16 @@ public class LibroServicio {
         for (Libro lib : libros) {
             System.out.println(lib);
         }
+        }catch (Exception e){ 
+            System.out.println("No se encuentra el ISBN del libro consultado!.");; 
+        }
     }
     
     public void busquedaLibroPorTitulo(){
         EntityManager em = Persistence.createEntityManagerFactory("LibreriaPU").createEntityManager();
+        try {
         System.out.println("Ingrese el titulo del libro que desea buscar: "); 
         String titulo = leer.next().toUpperCase();
-        //Libro l = em.find(Libro.class, titulo);
         List<Libro> libros = em.createQuery("SELECT l FROM Libro l WHERE l.titulo = :titulo").setParameter("titulo",titulo).getResultList();
         if (libros.isEmpty()){
             System.out.println("No se encuentra un libro con ese titulo");
@@ -112,9 +103,13 @@ public class LibroServicio {
         for (Libro lib : libros) {
             System.out.println(lib);
         }
+        }catch (Exception e){ 
+            System.out.println("No se encuentra el TITULO del libro consultado!.");; 
+        }
     }
     public void busquedaLibroPorNombreAutor(){
         EntityManager em = Persistence.createEntityManagerFactory("LibreriaPU").createEntityManager();
+        try {
         System.out.println("Ingrese el nombre de Autor del libro que desea buscar: ");
         String nombre = leer.next().toUpperCase();
         //Libro nomAutor = em.find(Libro.class, leer.next());
@@ -125,9 +120,13 @@ public class LibroServicio {
         for (Libro lib : libros) {
             System.out.println(lib);
         }
+        }catch (Exception e){ 
+            System.out.println("No se encuentra el LIBRO con el nombre del AUTOR consultado!.");; 
+        }
     }
     public void busquedaLibroPorNombreEditorial(){
         EntityManager em = Persistence.createEntityManagerFactory("LibreriaPU").createEntityManager();
+        try {
         System.out.println("Ingrese el nombre de editorial del libro que desea buscar: "); 
         String nomEditorial = leer.next().toUpperCase();
         
@@ -137,6 +136,9 @@ public class LibroServicio {
         }
         for (Libro lib : libros) {
             System.out.println(lib);
+        }
+        }catch (Exception e){ 
+            System.out.println("No se encuentra el LIBRO con el nombre de la EDITORIAL consultado!.");; 
         }
     }
     public void string(){
